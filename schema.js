@@ -98,10 +98,10 @@ const RootQuery = new GraphQLObjectType({
   }
 });
 
-/*
 const Mutation = new GraphQLObjectType({
   name: "Mutation",
   fields: {
+    /*
     addGoal: {
       type: GoalType,
       args: {
@@ -115,7 +115,7 @@ const Mutation = new GraphQLObjectType({
         });
         return author.save();
       }
-    }/*,
+    },
     addBook: {
       type: BookType,
       args: {
@@ -131,11 +131,24 @@ const Mutation = new GraphQLObjectType({
         });
         return book.save();
       }
+    }*/
+
+    addGoal: {
+      type: GoalType,
+      args: {
+        goalName: { type: new GraphQLNonNull(GraphQLString) }
+      },
+      resolve(parent, args) {
+        let goal = new Goal({
+          goalName: args.goalName
+        });
+        return goal.save();
+      }
     }
   }
-});*/
+});
 
 module.exports = new GraphQLSchema({
-  query: RootQuery
-  //mutation: Mutation
+  query: RootQuery,
+  mutation: Mutation
 });
