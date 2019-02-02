@@ -1,5 +1,6 @@
 const graphql = require("graphql");
 const Goal = require("./models/goal");
+const Dates = require("./models/date");
 const Log = require("./models/log");
 const _ = require("lodash");
 const mongoose = require("mongoose");
@@ -18,7 +19,7 @@ const LogType = new GraphQLObjectType({
   name: "Log",
   fields: () => ({
     id: { type: GraphQLID },
-    date: { type: GraphQLString },
+    //date: { type: GraphQLString },
     logName: { type: GraphQLString },
     goals: {
       type: new GraphQLList(GoalType),
@@ -38,6 +39,20 @@ const GoalType = new GraphQLObjectType({
       type: new GraphQLList(LogType),
       resolve(parent, args) {
         return Log.find({ goalId: parent.id });
+      }
+    }
+  })
+});
+
+const DateType = new GraphQLObjectType({
+  name: "Date",
+  fields: () => ({
+    id: { type: GraphQLID },
+    dateName: { type: GraphQLString },
+    logs: {
+      type: new GraphQLList(LogType),
+      resolve(parent, args) {
+        return Log.find({ _id: parent.logId });
       }
     }
   })
@@ -67,6 +82,13 @@ const RootQuery = new GraphQLObjectType({
         return Book.find({});
       }
     },*/
+    dates: {
+      type: new GraphQLList(DateType),
+      resolve(parent, args) {
+        return Dates.find({});
+      }
+    },
+
     goals: {
       type: new GraphQLList(GoalType),
       resolve(parent, args) {
