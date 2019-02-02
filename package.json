@@ -1,0 +1,21 @@
+{
+  "name": "graphql_worklog",
+  "version": "1.0.0",
+  "description": "a work log",
+  "main": "server.js",
+  "scripts": {
+    "dev:server": "nodemon server.js",
+    "json:server": "json-server --watch data.json"
+  },
+  "author": "Gary Haizhi Lai",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "express": "^4.16.4",
+    "express-graphql": "^0.7.1",
+    "graphql": "^14.1.1",
+    "json-server": "^0.14.2",
+    "mongoose": "^5.4.9",
+    "nodemon": "^1.18.9"
+  }
+}
