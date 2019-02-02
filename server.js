@@ -4,6 +4,9 @@ const schema = require("./schema.js");
 const mongoose = require("mongoose");
 const app = express();
 const Goal = require("./models/goal");
+const Log = require("./models/log");
+
+mongoose.Promise = global.Promise;
 
 app.use(
   "/graphql",
@@ -17,10 +20,33 @@ app.listen(4000, () => {
   console.log("Server is running on port 4000..");
 });
 
+var thatGoalId;
+
+function setupData(placeholder, callback) {
+  mongoose.connection.collections.goals.drop();
+  mongoose.connection.collections.logs.drop();
+  callback();
+}
+
 // Connect to mongodb
-mongoose.connect("mongodb://localhost/worklog");
+mongoose.connect(
+  "mongodb://localhost/worklog",
+  function(err, client) {
+    if (err) {
+      console.log(err);
+    }
+    //client.db.listCollections().toArray(function(err, collections) {
+    //console.log("collections length is: " + collections.length);
+    //console.log("THis is collection" + collections);
+    setupData(0, modifyData);
+    //});
+  }
+);
+
 mongoose.connection
   .once("open", function() {
+    //mongoose.connection.collections.goals.drop();
+    //mongoose.connection.collections.logs.drop();
     console.log("connection established..");
   })
   .on("error", function(error) {
@@ -29,19 +55,37 @@ mongoose.connection
 
 // app.use(express.static("/addData.js"));
 
-// Hardcode the data now
+function modifyData() {
+  // Add new data
+  var aGoal = new Goal({
+    goalName: "Be a better person"
+  });
 
-// Clear the collection first
+  aGoal.save(function() {
+    Goal.findOne({ goalName: "Be a better person" }).then(function(result) {
+      /*console.log(result + "here");
+      console.log(result._id);*/
+      thatGoalId = result._id;
 
-mongoose.connection.collections.goals.drop();
+      //console.log("It is:" + thatGoalId);
 
-// Add new data
-var aGoal = new Goal({
-  goalName: "Be a better person",
-  logs: [
-    { logName: "Played chess", date: "10 - 1 - 2017" },
-    { logName: "Played piano", date: "10 - 2 - 2016" }
-  ]
-});
+      var aLog = new Log({
+        logName: "Worked hard",
+        date: "10-1-2019",
+        goalId: thatGoalId
+      });
 
-aGoal.save();
+      var aLog1 = new Log({
+        logName: "Played hard",
+        date: "10-2-2019",
+        goalId: thatGoalId
+      });
+
+      aLog.save();
+      aLog1.save();
+    });
+  });
+
+  // Hardcode the data now
+  // Clear the collection first
+}
