@@ -144,6 +144,19 @@ const Mutation = new GraphQLObjectType({
         });
         return goal.save();
       }
+    },
+
+    addDate: {
+      type: DateType,
+      args: {
+        dateName: { type: new GraphQLNonNull(GraphQLString) }
+      },
+      resolve(parent, args) {
+        let date = new Dates({
+          dateName: args.dateName
+        });
+        return date.save();
+      }
     }
   }
 });
