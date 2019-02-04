@@ -132,6 +132,39 @@ const Mutation = new GraphQLObjectType({
         return book.save();
       }
     }*/
+    addLog: {
+      type: LogType,
+      args: {
+        logName: { type: new GraphQLNonNull(GraphQLString) },
+        goalId: { type: new GraphQLNonNull(GraphQLString) }
+        // date: { type: new GraphQLNonNull(GraphQLString) },
+      },
+      resolve(parent, args) {
+        let log = new Log({
+          logName: args.logName,
+          goalId: args.goalId
+        });
+        //Dates.findOneAndUpdate({dateName: date}, {$push:{}})
+        return log.save();
+      }
+    },
+
+    // add the logId to the corresponding date
+    updateDate: {
+      type: DateType,
+      args: {
+        dateName: { type: new GraphQLNonNull(GraphQLString) },
+        logId: { type: new GraphQLNonNull(GraphQLString) }
+      },
+      resolve(parent, args) {
+        Dates.findOneAndUpdate(
+          { dateName: args.dateName },
+          { $push: { logId: args.logId } }
+        ).then(function() {
+          return;
+        });
+      }
+    },
 
     addGoal: {
       type: GoalType,

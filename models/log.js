@@ -4,7 +4,6 @@ const Schema = mongoose.Schema;
 
 const LogSchema = new Schema({
   logName: String,
-  date: String,
   goalId: String
 });
 
