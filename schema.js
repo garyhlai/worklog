@@ -1,7 +1,7 @@
 const graphql = require("graphql");
 const Goal = require("./models/goal");
 const Dates = require("./models/date");
-const Log = require("./models/log");
+//const Log = require("./models/log");
 const _ = require("lodash");
 const mongoose = require("mongoose");
 
@@ -21,12 +21,7 @@ const LogType = new GraphQLObjectType({
     id: { type: GraphQLID },
     //date: { type: GraphQLString },
     logName: { type: GraphQLString },
-    goals: {
-      type: new GraphQLList(GoalType),
-      resolve(parent, args) {
-        return Goal.findById(parent.goalId);
-      }
-    }
+    goalId: { type: GraphQLString }
   })
 });
 
@@ -38,12 +33,12 @@ const GoalType = new GraphQLObjectType({
     logs: {
       type: new GraphQLList(LogType),
       resolve(parent, args) {
-        return Log.find({ goalId: parent.id });
+        return Dates.find({ logs: { goalId: parent.id } });
       }
     }
   })
 });
-
+/*
 const DateType = new GraphQLObjectType({
   name: "Date",
   fields: () => ({
@@ -57,7 +52,7 @@ const DateType = new GraphQLObjectType({
     }
   })
 });
-
+*/
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
   fields: {
@@ -82,12 +77,15 @@ const RootQuery = new GraphQLObjectType({
         return Book.find({});
       }
     },*/
+
+    /*
     dates: {
       type: new GraphQLList(DateType),
       resolve(parent, args) {
         return Dates.find({});
       }
     },
+    */
 
     goals: {
       type: new GraphQLList(GoalType),
@@ -132,6 +130,7 @@ const Mutation = new GraphQLObjectType({
         return book.save();
       }
     }*/
+    /*
     addLog: {
       type: LogType,
       args: {
@@ -178,7 +177,8 @@ const Mutation = new GraphQLObjectType({
         return goal.save();
       }
     },
-
+*/
+    /*
     addDate: {
       type: DateType,
       args: {
@@ -190,11 +190,11 @@ const Mutation = new GraphQLObjectType({
         });
         return date.save();
       }
-    }
+    }*/
   }
 });
 
 module.exports = new GraphQLSchema({
-  query: RootQuery,
-  mutation: Mutation
+  query: RootQuery
+  // mutation: Mutation
 });

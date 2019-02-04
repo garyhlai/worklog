@@ -2,10 +2,15 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
+const LogSchema = new Schema({
+  logName: String,
+  goalId: String
+});
+
 // Create schemas (like class, blueprint for the object)
 const DateSchema = new Schema({
   dateName: String,
-  logId: [String]
+  logs: [LogSchema]
 });
 
 // Create the model based on the schema (like object)
