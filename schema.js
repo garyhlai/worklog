@@ -19,7 +19,6 @@ const LogType = new GraphQLObjectType({
   name: "Log",
   fields: () => ({
     id: { type: GraphQLID },
-    //date: { type: GraphQLString },
     logName: { type: GraphQLString },
     goalId: { type: GraphQLString }
   })
@@ -34,7 +33,7 @@ const GoalType = new GraphQLObjectType({
       type: new GraphQLList(DateType),
       resolve(parent, args) {
         console.log("parent.id: " + parent.id);
-        return Dates.find({ logs: { goalId: "5c58c2dc5267183d4e02b526" } });
+        return Dates.find({ logs: parent.id });
       }
     }
   })

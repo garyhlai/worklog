@@ -48,43 +48,57 @@ mongoose.connection
 
 //Dates.findOneAndUpdate({ dateName: "10-1-2019" }, { dateName: "5-5-5555" });
 
+//global variable
+
+var theId;
+
 function modifyData() {
   // Add new data
   var aGoal = new Goal({
     goalName: "Be a better person"
   });
 
-  aGoal.save(function() {
-    var aDate = new Dates({
-      dateName: "10-1-2019",
-      logs: [
-        { logName: "Played chess", goalId: "default1" },
-        { logName: "Played Go", goalId: "default2" },
-        { logName: "Played piano", goalId: "default3" }
-      ]
-    });
-    aDate.save(
-      //Goal.find({ goalName: "Be a better person" }).then(
-      function() {
-        console.log("found");
-        /*  works
+  aGoal.save(
+    function() {
+      var aDate = new Dates({
+        dateName: "10-1-2019",
+        logs: [
+          { logName: "Played chess", goalId: "default1" },
+          { logName: "Played Go", goalId: "default2" },
+          { logName: "Played piano", goalId: "default3" }
+        ]
+      });
+      aDate.save(
+        //Goal.find({ goalName: "Be a better person" }).then(
+        function() {
+          console.log("found");
+          /*  works
         Dates.findOneAndUpdate(
           { dateName: "10-1-2019" },
           { dateName: "1-1-1922" }
         ).then(console.log("executed"));
         */
-        /* works too
+          /* works too
         Dates.findOneAndUpdate(
           {},
           { $set: { "logs.$[elem].goalId": "100" } },
           { arrayFilters: [{ "elem.logName": "Played chess" }] }
         ).then(console.log("executed"));
         */
-        Dates.findOneAndUpdate(
-          {},
-          { $set: { "logs.$[].goalId": "updated_default" } }
-        ).then(console.log("executed"));
-      } //)
-    );
-  });
+
+          Goal.findOne({ goalName: "Be a better person" })
+            .then(function(result) {
+              theId = result._id;
+              console.log(theId);
+            })
+            .then(function() {
+              Dates.findOneAndUpdate(
+                {},
+                { $set: { "logs.$[].goalId": theId } }
+              ).then(console.log("executed"));
+            });
+        }
+      );
+    } //)
+  );
 }
