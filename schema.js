@@ -31,28 +31,26 @@ const GoalType = new GraphQLObjectType({
     id: { type: GraphQLID },
     goalName: { type: GraphQLString },
     logs: {
-      type: new GraphQLList(LogType),
+      type: new GraphQLList(DateType),
       resolve(parent, args) {
-        return Dates.find({ logs: { goalId: parent.id } });
+        console.log("parent.id: " + parent.id);
+        return Dates.find({ logs: { goalId: "5c58c2dc5267183d4e02b526" } });
       }
     }
   })
 });
-/*
+
 const DateType = new GraphQLObjectType({
   name: "Date",
   fields: () => ({
     id: { type: GraphQLID },
     dateName: { type: GraphQLString },
     logs: {
-      type: new GraphQLList(LogType),
-      resolve(parent, args) {
-        return Log.find({ _id: parent.logId });
-      }
+      type: new GraphQLList(LogType)
     }
   })
 });
-*/
+
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
   fields: {

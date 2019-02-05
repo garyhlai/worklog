@@ -46,6 +46,8 @@ mongoose.connection
     console.log("connection error:", error);
   });
 
+//Dates.findOneAndUpdate({ dateName: "10-1-2019" }, { dateName: "5-5-5555" });
+
 function modifyData() {
   // Add new data
   var aGoal = new Goal({
@@ -61,6 +63,28 @@ function modifyData() {
         { logName: "Played piano", goalId: "default3" }
       ]
     });
-    aDate.save();
+    aDate.save(
+      //Goal.find({ goalName: "Be a better person" }).then(
+      function() {
+        console.log("found");
+        /*  works
+        Dates.findOneAndUpdate(
+          { dateName: "10-1-2019" },
+          { dateName: "1-1-1922" }
+        ).then(console.log("executed"));
+        */
+        /* works too
+        Dates.findOneAndUpdate(
+          {},
+          { $set: { "logs.$[elem].goalId": "100" } },
+          { arrayFilters: [{ "elem.logName": "Played chess" }] }
+        ).then(console.log("executed"));
+        */
+        Dates.findOneAndUpdate(
+          {},
+          { $set: { "logs.$[].goalId": "updated_default" } }
+        ).then(console.log("executed"));
+      } //)
+    );
   });
 }
