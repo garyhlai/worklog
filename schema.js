@@ -154,11 +154,8 @@ const Mutation = new GraphQLObjectType({
           { $push: { logs: { logName: args.logName, goalId: args.goalId } } },
           { returnNewDocument: true }
         );
-
-        //.then(function(result) {
-        // return result;
       }
-    }
+    },
     /*
     // add the logId to the corresponding date
     updateDate: {
@@ -175,7 +172,7 @@ const Mutation = new GraphQLObjectType({
           return;
         });
       }
-    },
+    },*/
 
     addGoal: {
       type: GoalType,
@@ -188,8 +185,8 @@ const Mutation = new GraphQLObjectType({
         });
         return goal.save();
       }
-    },
-*/
+    }
+
     /*
     addDate: {
       type: DateType,
