@@ -24,6 +24,20 @@ const LogType = new GraphQLObjectType({
   })
 });
 
+/* To query logs that work toward a goal
+{
+  goals {
+    id
+  	goalName
+    logs{
+      dateName
+      logs{
+        logName
+      }
+    }
+  }
+}
+*/
 const GoalType = new GraphQLObjectType({
   name: "Goal",
   fields: () => ({
@@ -33,7 +47,7 @@ const GoalType = new GraphQLObjectType({
       type: new GraphQLList(DateType),
       resolve(parent, args) {
         console.log("parent.id: " + parent.id);
-        return Dates.find({ logs: parent.id });
+        return Dates.find({ "logs.goalId": parent.id });
       }
     }
   })
@@ -74,7 +88,6 @@ const RootQuery = new GraphQLObjectType({
         return Book.find({});
       }
     },*/
-
     /*
     dates: {
       type: new GraphQLList(DateType),
@@ -83,7 +96,6 @@ const RootQuery = new GraphQLObjectType({
       }
     },
     */
-
     goals: {
       type: new GraphQLList(GoalType),
       resolve(parent, args) {
@@ -127,24 +139,27 @@ const Mutation = new GraphQLObjectType({
         return book.save();
       }
     }*/
-    /*
+
     addLog: {
-      type: LogType,
+      type: DateType,
       args: {
         logName: { type: new GraphQLNonNull(GraphQLString) },
-        goalId: { type: new GraphQLNonNull(GraphQLString) }
+        goalId: { type: new GraphQLNonNull(GraphQLString) },
+        dateName: { type: new GraphQLNonNull(GraphQLString) }
         // date: { type: new GraphQLNonNull(GraphQLString) },
       },
       resolve(parent, args) {
-        let log = new Log({
-          logName: args.logName,
-          goalId: args.goalId
-        });
-        //Dates.findOneAndUpdate({dateName: date}, {$push:{}})
-        return log.save();
-      }
-    },
+        return Dates.findOneAndUpdate(
+          { dateName: args.dateName },
+          { $push: { logs: { logName: args.logName, goalId: args.goalId } } },
+          { returnNewDocument: true }
+        );
 
+        //.then(function(result) {
+        // return result;
+      }
+    }
+    /*
     // add the logId to the corresponding date
     updateDate: {
       type: DateType,
@@ -192,6 +207,6 @@ const Mutation = new GraphQLObjectType({
 });
 
 module.exports = new GraphQLSchema({
-  query: RootQuery
-  // mutation: Mutation
+  query: RootQuery,
+  mutation: Mutation
 });
