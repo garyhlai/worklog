@@ -31,7 +31,7 @@ class LogList extends Component {
             <h1>{date.dateName}</h1>
             <h4>
               {date.logs.map(theLog => {
-                return <li key={theLog.id}> {theLog.logName}</li>;
+                return <li key={theLog._id}> {theLog.logName}</li>;
               })}
             </h4>
           </div>
@@ -40,12 +40,13 @@ class LogList extends Component {
     }
   }
 
+  /*
   experiment() {
     var mydata = [1, 2, 3];
     mydata.forEach(number => {
       console.log(number);
     });
-  }
+  }*/
   /*;*/
 
   // date 1 {logs {logName1 , logName2}}
@@ -56,7 +57,6 @@ class LogList extends Component {
     return (
       <div>
         <header id="log-list">{this.displayLogs()}</header>
-        <ul id="experiment">{this.experiment()}</ul>
       </div>
     );
   }

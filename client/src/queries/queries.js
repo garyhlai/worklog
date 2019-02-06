@@ -3,6 +3,7 @@ import { gql } from "apollo-boost";
 const getGoalsQuery = gql`
   {
     goals {
+      id
       goalName
     }
   }
@@ -11,8 +12,10 @@ const getGoalsQuery = gql`
 const getLogsQuery = gql`
   {
     logs {
+      id
       dateName
       logs {
+        id
         logName
         goalId
       }

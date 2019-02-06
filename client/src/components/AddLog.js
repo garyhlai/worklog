@@ -11,8 +11,9 @@ class AddLog extends Component {
     super(props);
     var currentDate = new Date().toDateString();
     this.state = {
-      dateName: currentDate,
-      // logs: [{ logName: "", goalId: "" }]
+      // no need to set the current date, it is set in the constructor
+      // dateName: currentDate,
+      dateName: "10-2-2019",
       logName: "",
       goalId: ""
     };
@@ -24,6 +25,7 @@ class AddLog extends Component {
     } else {
       //console.log(data.goals);
       return data.goals.map(goal => {
+        //console.log(goal);
         return (
           <option key={goal.id} value={goal.id}>
             {goal.goalName}
@@ -59,10 +61,9 @@ class AddLog extends Component {
             onChange={e => this.setState({ logName: e.target.value })}
           />
         </div>
-
         <div className="field">
           <label>Goal:</label>
-          <select onChange={e => this.setState({ dateName: e.target.value })}>
+          <select onChange={e => this.setState({ goalId: e.target.value })}>
             <option>Select goal</option>
             {this.displayGoals()}
           </select>
