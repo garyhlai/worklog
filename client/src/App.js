@@ -4,6 +4,7 @@ import { ApolloProvider } from "react-apollo";
 
 // components
 import LogList from "./components/LogList";
+import GoalList from "./components/GoalList";
 import AddLog from "./components/AddLog";
 import AddGoal from "./components/AddGoal";
 
@@ -21,6 +22,7 @@ class App extends Component {
           <AddLog />
           <AddGoal />
           <LogList />
+          <GoalList />
         </div>
       </ApolloProvider>
     );
