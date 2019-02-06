@@ -30,6 +30,14 @@ const addLogMutation = gql`
     }
   }
 `;
+
+const addGoalMutation = gql`
+  mutation AddGoal($goalName: String!) {
+    addGoal(goalName: $goalName) {
+      goalName
+    }
+  }
+`;
 /*
 const getBookQuery = gql`
     query GetBook($id: ID){
@@ -51,4 +59,4 @@ const getBookQuery = gql`
 `;*/
 
 //export { getAuthorsQuery, getBooksQuery, addBookMutation, getBookQuery };
-export { getGoalsQuery, addLogMutation, getLogsQuery };
+export { getGoalsQuery, addLogMutation, addGoalMutation, getLogsQuery };

@@ -68,7 +68,7 @@ class AddLog extends Component {
             {this.displayGoals()}
           </select>
         </div>
-        <button>+</button>
+        <button>Add Log</button>
       </form>
     );
   }
