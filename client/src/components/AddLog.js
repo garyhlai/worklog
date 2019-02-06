@@ -1,18 +1,20 @@
 import React, { Component } from "react";
 import { graphql, compose } from "react-apollo";
 import {
-  getGoalsQuery
-  //addBookMutation,
+  getGoalsQuery,
+  addLogMutation
   // getBooksQuery
 } from "../queries/queries";
 
 class AddLog extends Component {
   constructor(props) {
     super(props);
-    var currentDate = new Date();
+    var currentDate = new Date().toDateString();
     this.state = {
       dateName: currentDate,
-      logs: [{ logName: "", goalId: "" }]
+      // logs: [{ logName: "", goalId: "" }]
+      logName: "",
+      goalId: ""
     };
   }
   displayGoals() {
@@ -28,42 +30,36 @@ class AddLog extends Component {
           </option>
         );
       });
-      // return console.log(data);
     }
   }
-  /*
+
   submitForm(e) {
     e.preventDefault();
     // use the addBookMutation
-    this.props.addBookMutation({
+    this.props.addLogMutation({
       variables: {
-        name: this.state.name,
-        genre: this.state.genre,
-        authorId: this.state.authorId
-      },
-      refetchQueries: [{ query: getBooksQuery }]
+        logName: this.state.logName,
+        dateName: this.state.dateName,
+        goalId: this.state.goalId
+      }
+      //  refetchQueries: [{ query: getBooksQuery }]
     });
-  }*/
+  }
 
   render() {
     return (
-      /*
-      <form id="add-book" onSubmit={this.submitForm.bind(this)}>
+      <form id="add-log" onSubmit={this.submitForm.bind(this)}>
         <div className="field">
+          <label style={{ display: "block" }}>
+            Todays is {this.state.dateName}
+          </label>
           <label>Log name:</label>
           <input
             type="text"
-            onChange={e => this.setState({ name: e.target.value })}
+            onChange={e => this.setState({ logName: e.target.value })}
           />
         </div>
-        <div className="field">
-          <label>Genre:</label>
-          <input
-            type="text"
-            onChange={e => this.setState({ genre: e.target.value })}
-          />
-        </div>*/
-      <form>
+
         <div className="field">
           <label>Goal:</label>
           <select onChange={e => this.setState({ dateName: e.target.value })}>
@@ -83,6 +79,7 @@ export default compose(
 )(AddLog);
 */
 
-export default compose(graphql(getGoalsQuery, { name: "getGoalsQuery" }))(
-  AddLog
-);
+export default compose(
+  graphql(getGoalsQuery, { name: "getGoalsQuery" }),
+  graphql(addLogMutation, { name: "addLogMutation" })
+)(AddLog);

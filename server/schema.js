@@ -81,13 +81,13 @@ const RootQuery = new GraphQLObjectType({
       resolve(parent, args) {
         return Author.findById(args.id);
       }
-    },
-    books: {
-      type: new GraphQLList(BookType),
-      resolve(parent, args) {
-        return Book.find({});
-      }
     },*/
+    logs: {
+      type: GraphQLList(DateType),
+      resolve(parent, args) {
+        return Dates.find({});
+      }
+    },
     /*
     dates: {
       type: new GraphQLList(DateType),
@@ -144,7 +144,7 @@ const Mutation = new GraphQLObjectType({
       type: DateType,
       args: {
         logName: { type: new GraphQLNonNull(GraphQLString) },
-        goalId: { type: new GraphQLNonNull(GraphQLString) },
+        goalId: { type: new GraphQLNonNull(GraphQLID) },
         dateName: { type: new GraphQLNonNull(GraphQLString) }
         // date: { type: new GraphQLNonNull(GraphQLString) },
       },
