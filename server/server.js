@@ -66,6 +66,16 @@ mongoose.connection
 var theId;
 
 function modifyData() {
+  var aDate2 = new Dates({
+    dateName: "10-2-2019",
+    logs: [
+      { logName: "Played coco", goalId: "default1" },
+      { logName: "Played fuge", goalId: "default2" },
+      { logName: "Played ass", goalId: "default3" }
+    ]
+  });
+  aDate2.save();
+
   // Add new data
   var aGoal = new Goal({
     goalName: "Be a better person"

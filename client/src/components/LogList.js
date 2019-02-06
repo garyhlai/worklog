@@ -17,28 +17,46 @@ class LogList extends Component {
     if (data.loading) {
       return <div>Loading books...</div>;
     } else {
-      //return data.logs.map(log => {
-      //return (
-      //<li key={log.id} onClick={e => this.setState({ selected: log.id })}>
-      //{log.logName}
-      //</li>
-      //);
-      // });
       /*
-      <li key={log.id} onClick={e => this.setState({ selected: log.id })}>
-            {JSON.stringify(log.logs)}
-          </li>*/
+      // return an array of array
       return data.logs.map(date => {
+        // return an array of <li> logName </li> for each date
         return date.logs.map(theLog => {
           return <li key={theLog.id}> {theLog.logName}</li>;
         });
+      });*/
+      return data.logs.map(date => {
+        return (
+          <div>
+            <h1>{date.dateName}</h1>
+            <h4>
+              {date.logs.map(theLog => {
+                return <li key={theLog.id}> {theLog.logName}</li>;
+              })}
+            </h4>
+          </div>
+        );
       });
     }
   }
+
+  experiment() {
+    var mydata = [1, 2, 3];
+    mydata.forEach(number => {
+      console.log(number);
+    });
+  }
+  /*;*/
+
+  // date 1 {logs {logName1 , logName2}}
+  // date 2 {logs {logName1, logName2}}
+
   render() {
+    console.log(this.displayLogs());
     return (
       <div>
-        <ul id="book-list">{this.displayLogs()}</ul>
+        <header id="log-list">{this.displayLogs()}</header>
+        <ul id="experiment">{this.experiment()}</ul>
       </div>
     );
   }
