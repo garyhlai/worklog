@@ -19,10 +19,10 @@ class App extends Component {
       <ApolloProvider client={client}>
         <div id="main">
           <h1>Sospiro Work Log</h1>
-          <AddLog />
           <AddGoal />
-          <LogList />
           <GoalList />
+          <AddLog />
+          <LogList />
         </div>
       </ApolloProvider>
     );

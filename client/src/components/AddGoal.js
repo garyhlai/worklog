@@ -1,7 +1,7 @@
 import React, { Component } from "react";
-import { graphql } from "react-apollo";
+import { graphql, compose } from "react-apollo";
 import {
-  //getGoalsQuery,
+  getGoalsQuery,
   addGoalMutation
   // getBooksQuery
 } from "../queries/queries";
@@ -38,8 +38,8 @@ class AddGoal extends Component {
     this.props.addGoalMutation({
       variables: {
         goalName: this.state.goalName
-      }
-      //  refetchQueries: [{ query: getBooksQuery }]
+      },
+      refetchQueries: [{ query: getGoalsQuery }]
     });
   }
 
@@ -66,4 +66,7 @@ export default compose(
 )(AddLog);
 */
 
-export default graphql(addGoalMutation, { name: "addGoalMutation" })(AddGoal);
+export default compose(
+  graphql(addGoalMutation, { name: "addGoalMutation" }),
+  graphql(getGoalsQuery, { name: "getGoalsQuery" })
+)(AddGoal);

@@ -2,8 +2,8 @@ import React, { Component } from "react";
 import { graphql, compose } from "react-apollo";
 import {
   getGoalsQuery,
-  addLogMutation
-  // getBooksQuery
+  addLogMutation,
+  getLogsQuery
 } from "../queries/queries";
 
 class AddLog extends Component {
@@ -43,7 +43,8 @@ class AddLog extends Component {
         logName: this.state.logName,
         dateName: this.state.dateName,
         goalId: this.state.goalId
-      }
+      },
+      refetchQueries: [{ query: getLogsQuery }]
       //  refetchQueries: [{ query: getBooksQuery }]
     });
   }
@@ -82,5 +83,6 @@ export default compose(
 
 export default compose(
   graphql(getGoalsQuery, { name: "getGoalsQuery" }),
-  graphql(addLogMutation, { name: "addLogMutation" })
+  graphql(addLogMutation, { name: "addLogMutation" }),
+  graphql(getLogsQuery, { name: "getLogsQuery" })
 )(AddLog);
