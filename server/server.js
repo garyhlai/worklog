@@ -1,17 +1,33 @@
 const express = require("express");
-const expressGraphQL = require("express-graphql");
+//const expressGraphQL = require("express-graphql");
+const graphqlHTTP = require("express-graphql");
 const schema = require("./schema.js");
 const mongoose = require("mongoose");
 const app = express();
 const Goal = require("./models/goal");
 const Dates = require("./models/date");
+const cors = require("cors");
 
 mongoose.Promise = global.Promise;
 
+/*
 app.use(
   "/graphql",
   expressGraphQL({
     schema: schema,
+    graphiql: true
+  })
+);
+*/
+
+//const app = express();
+
+app.use(cors());
+
+app.use(
+  "/graphql",
+  graphqlHTTP({
+    schema, //query schema, not data storage schema
     graphiql: true
   })
 );
@@ -27,16 +43,13 @@ function setupData(placeholder, callback) {
 }
 
 // Connect to mongodb
-mongoose.connect(
-  "mongodb://localhost/worklog",
-  function(err, client) {
-    if (err) {
-      console.log(err);
-    }
-    //setupData2(0, modifyData2);
-    setupData(0, modifyData);
+mongoose.connect("mongodb://localhost/worklog", function(err, client) {
+  if (err) {
+    console.log(err);
   }
-);
+  //setupData2(0, modifyData2);
+  setupData(0, modifyData);
+});
 
 mongoose.connection
   .once("open", function() {
