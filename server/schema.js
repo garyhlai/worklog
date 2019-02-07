@@ -67,21 +67,20 @@ const DateType = new GraphQLObjectType({
 const RootQuery = new GraphQLObjectType({
   name: "RootQueryType",
   fields: {
-    /*
-    book: {
-      type: BookType,
-      args: { id: { type: GraphQLID } },
+    date: {
+      type: DateType,
+      args: { dateName: { type: GraphQLString } },
       resolve(parent, args) {
-        return Book.findById(args.id);
+        return Dates.findOne({ dateName: args.dateName });
       }
-    },
+    } /*
     author: {
       type: AuthorType,
       args: { id: { type: GraphQLID } },
       resolve(parent, args) {
         return Author.findById(args.id);
       }
-    },*/
+    },*/,
     logs: {
       type: GraphQLList(DateType),
       resolve(parent, args) {
@@ -152,7 +151,7 @@ const Mutation = new GraphQLObjectType({
         return Dates.findOneAndUpdate(
           { dateName: args.dateName },
           { $push: { logs: { logName: args.logName, goalId: args.goalId } } },
-          { returnNewDocument: true }
+          { returnNewDocument: true, upsert: true }
         );
       }
     },
@@ -185,9 +184,8 @@ const Mutation = new GraphQLObjectType({
         });
         return goal.save();
       }
-    }
+    },
 
-    /*
     addDate: {
       type: DateType,
       args: {
@@ -199,7 +197,7 @@ const Mutation = new GraphQLObjectType({
         });
         return date.save();
       }
-    }*/
+    }
   }
 });
 

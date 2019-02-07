@@ -10,18 +10,6 @@ const cors = require("cors");
 
 mongoose.Promise = global.Promise;
 
-/*
-app.use(
-  "/graphql",
-  expressGraphQL({
-    schema: schema,
-    graphiql: true
-  })
-);
-*/
-
-//const app = express();
-
 app.use(cors());
 
 app.use(
@@ -47,8 +35,7 @@ mongoose.connect("mongodb://localhost/worklog", function(err, client) {
   if (err) {
     console.log(err);
   }
-  //setupData2(0, modifyData2);
-  setupData(0, modifyData);
+  //setupData(0, modifyData);
 });
 
 mongoose.connection
@@ -59,15 +46,18 @@ mongoose.connection
     console.log("connection error:", error);
   });
 
-//Dates.findOneAndUpdate({ dateName: "10-1-2019" }, { dateName: "5-5-5555" });
-
 //global variable
 
 var theId;
+var currentDate = new Date().toDateString();
+//var currentTime = new Date().toString();
+/*function setTime(){
+}
+setInterval(setTime, 5000);*/
 
 function modifyData() {
   var aDate2 = new Dates({
-    dateName: "10-2-2019",
+    dateName: "5-5-5",
     logs: [
       { logName: "Played coco", goalId: "default1" },
       { logName: "Played fuge", goalId: "default2" },
@@ -81,27 +71,19 @@ function modifyData() {
     goalName: "Be a better person"
   });
 
-  aGoal.save(
-    function() {
-      var aDate = new Dates({
-        dateName: "10-1-2019",
-        logs: [
-          { logName: "Played chess", goalId: "default1" },
-          { logName: "Played Go", goalId: "default2" },
-          { logName: "Played piano", goalId: "default3" }
-        ]
-      });
-      aDate.save(
-        //Goal.find({ goalName: "Be a better person" }).then(
-        function() {
-          console.log("found");
-          /*  works
-        Dates.findOneAndUpdate(
-          { dateName: "10-1-2019" },
-          { dateName: "1-1-1922" }
-        ).then(console.log("executed"));
-        */
-          /* works too
+  aGoal.save(function() {
+    var aDate = new Dates({
+      dateName: "10-1-2019",
+      logs: [
+        { logName: "Played chess", goalId: "default1" },
+        { logName: "Played Go", goalId: "default2" },
+        { logName: "Played piano", goalId: "default3" }
+      ]
+    });
+    aDate.save(function() {
+      console.log("found");
+
+      /* works 
         Dates.findOneAndUpdate(
           {},
           { $set: { "logs.$[elem].goalId": "100" } },
@@ -109,19 +91,17 @@ function modifyData() {
         ).then(console.log("executed"));
         */
 
-          Goal.findOne({ goalName: "Be a better person" })
-            .then(function(result) {
-              theId = result._id;
-              console.log(theId);
-            })
-            .then(function() {
-              Dates.findOneAndUpdate(
-                {},
-                { $set: { "logs.$[].goalId": theId } }
-              ).then(console.log("executed"));
-            });
-        }
-      );
-    } //)
-  );
+      Goal.findOne({ goalName: "Be a better person" })
+        .then(function(result) {
+          theId = result._id;
+          console.log(theId);
+        })
+        .then(function() {
+          Dates.findOneAndUpdate(
+            {},
+            { $set: { "logs.$[].goalId": theId } }
+          ).then(console.log("executed"));
+        });
+    });
+  });
 }

@@ -15,23 +15,6 @@ class AddGoal extends Component {
       goalName: ""
     };
   }
-  /*
-  displayGoals() {
-    var data = this.props.getGoalsQuery;
-    if (data.loading) {
-      return <option disabled>Loading goals</option>;
-    } else {
-      //console.log(data.goals);
-      return data.goals.map(goal => {
-        //console.log(goal);
-        return (
-          <option key={goal.id} value={goal.id}>
-            {goal.goalName}
-          </option>
-        );
-      });
-    }
-  }*/
 
   submitForm(e) {
     e.preventDefault();
@@ -50,6 +33,7 @@ class AddGoal extends Component {
         <div className="field">
           <label>Goal name:</label>
           <input
+            required
             type="text"
             onChange={e => this.setState({ goalName: e.target.value })}
           />
@@ -59,12 +43,6 @@ class AddGoal extends Component {
     );
   }
 }
-/*
-export default compose(
-  graphql(getAuthorsQuery, { name: "getAuthorsQuery" }),
-  graphql(addBookMutation, { name: "addBookMutation" })
-)(AddLog);
-*/
 
 export default compose(
   graphql(addGoalMutation, { name: "addGoalMutation" }),

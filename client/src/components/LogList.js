@@ -40,18 +40,6 @@ class LogList extends Component {
     }
   }
 
-  /*
-  experiment() {
-    var mydata = [1, 2, 3];
-    mydata.forEach(number => {
-      console.log(number);
-    });
-  }*/
-  /*;*/
-
-  // date 1 {logs {logName1 , logName2}}
-  // date 2 {logs {logName1, logName2}}
-
   render() {
     console.log(this.displayLogs());
     return (

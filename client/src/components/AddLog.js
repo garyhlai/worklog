@@ -3,7 +3,9 @@ import { graphql, compose } from "react-apollo";
 import {
   getGoalsQuery,
   addLogMutation,
-  getLogsQuery
+  getLogsQuery,
+  addDateMutation
+  //getDateQuery
 } from "../queries/queries";
 
 class AddLog extends Component {
@@ -11,21 +13,18 @@ class AddLog extends Component {
     super(props);
     var currentDate = new Date().toDateString();
     this.state = {
-      // no need to set the current date, it is set in the constructor
-      // dateName: currentDate,
-      dateName: "10-2-2019",
+      dateName: currentDate,
       logName: "",
       goalId: ""
     };
   }
+
   displayGoals() {
     var data = this.props.getGoalsQuery;
     if (data.loading) {
       return <option disabled>Loading goals</option>;
     } else {
-      //console.log(data.goals);
       return data.goals.map(goal => {
-        //console.log(goal);
         return (
           <option key={goal.id} value={goal.id}>
             {goal.goalName}
@@ -37,7 +36,7 @@ class AddLog extends Component {
 
   submitForm(e) {
     e.preventDefault();
-    // use the addBookMutation
+
     this.props.addLogMutation({
       variables: {
         logName: this.state.logName,
@@ -45,43 +44,61 @@ class AddLog extends Component {
         goalId: this.state.goalId
       },
       refetchQueries: [{ query: getLogsQuery }]
-      //  refetchQueries: [{ query: getBooksQuery }]
     });
+  }
+
+  componentDidMount() {
+    var goalSelector = document.getElementById("selectGoal");
+    goalSelector.setCustomValidity("Please select!!!");
   }
 
   render() {
     return (
-      <form id="add-log" onSubmit={this.submitForm.bind(this)}>
-        <div className="field">
-          <label style={{ display: "block" }}>
-            Todays is {this.state.dateName}
-          </label>
-          <label>Log name:</label>
-          <input
-            type="text"
-            onChange={e => this.setState({ logName: e.target.value })}
-          />
-        </div>
-        <div className="field">
-          <label>Goal:</label>
-          <select onChange={e => this.setState({ goalId: e.target.value })}>
-            <option>Select goal</option>
-            {this.displayGoals()}
-          </select>
-        </div>
-        <button>Add Log</button>
-      </form>
+      <div>
+        <form id="add-log" onSubmit={this.submitForm.bind(this)}>
+          <div className="field">
+            <label style={{ display: "block" }}>
+              Todays is {this.state.dateName}
+            </label>
+            <label>Log name:</label>
+            <input
+              required
+              type="text"
+              onChange={e => {
+                this.setState({ logName: e.target.value });
+              }}
+            />
+          </div>
+          <div className="field">
+            <label>Goal:</label>
+            <select
+              id="selectGoal"
+              onChange={e => {
+                this.setState({ goalId: e.target.value });
+
+                var goalSelector = document.getElementById("selectGoal");
+                if (e.target.value === "") {
+                  console.log("e.target.value: " + e.target.value);
+                  goalSelector.setCustomValidity("This is wrong!");
+                } else {
+                  console.log("e.target.value in else: " + e.target.value);
+                  goalSelector.setCustomValidity("");
+                }
+              }}
+            >
+              <option value="">Select goal</option>
+              {this.displayGoals()}
+            </select>
+          </div>
+          <button>Add Log</button>
+        </form>
+      </div>
     );
   }
 }
-/*
-export default compose(
-  graphql(getAuthorsQuery, { name: "getAuthorsQuery" }),
-  graphql(addBookMutation, { name: "addBookMutation" })
-)(AddLog);
-*/
 
 export default compose(
+  graphql(addDateMutation, { name: "addDateMutation" }),
   graphql(getGoalsQuery, { name: "getGoalsQuery" }),
   graphql(addLogMutation, { name: "addLogMutation" }),
   graphql(getLogsQuery, { name: "getLogsQuery" })

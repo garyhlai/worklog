@@ -22,10 +22,47 @@ const getLogsQuery = gql`
     }
   }
 `;
-
+/*
+const getBookQuery = gql`
+    query GetBook($id: ID){
+        book(id: $id) {
+            id
+            name
+            genre
+            author {
+                id
+                name
+                age
+                books {
+                    name
+                    id
+                }
+            }
+        }
+    }
+`;*/
 const addLogMutation = gql`
   mutation AddLog($logName: String!, $dateName: String!, $goalId: ID!) {
     addLog(logName: $logName, dateName: $dateName, goalId: $goalId) {
+      dateName
+    }
+  }
+`;
+/*
+const getDateQuery = gql`
+  {
+    query GetDate($dateName: String!){
+    date(dateName: $dateName) {
+      dateName
+    }
+  }
+  }
+`;
+*/
+
+const getDateQuery = gql`
+  query GetDate($dateName: String!) {
+    date(dateName: $dateName) {
       dateName
     }
   }
@@ -35,6 +72,14 @@ const addGoalMutation = gql`
   mutation AddGoal($goalName: String!) {
     addGoal(goalName: $goalName) {
       goalName
+    }
+  }
+`;
+
+const addDateMutation = gql`
+  mutation AddDate($dateName: String!) {
+    addDate(dateName: $dateName) {
+      dateName
     }
   }
 `;
@@ -59,4 +104,11 @@ const getBookQuery = gql`
 `;*/
 
 //export { getAuthorsQuery, getBooksQuery, addBookMutation, getBookQuery };
-export { getGoalsQuery, addLogMutation, addGoalMutation, getLogsQuery };
+export {
+  getGoalsQuery,
+  addDateMutation,
+  addLogMutation,
+  addGoalMutation,
+  getLogsQuery,
+  getDateQuery
+};
