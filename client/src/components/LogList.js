@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { graphql } from "react-apollo";
-import { getLogsQuery } from "../queries/queries";
+import { graphql, compose } from "react-apollo";
+import { getLogsQuery, deleteLogMutation } from "../queries/queries";
 
 // components
 //import BookDetails from './BookDetails';
@@ -9,9 +9,11 @@ class LogList extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      selected: null
+      selected: null,
+      logId: ""
     };
   }
+
   displayLogs() {
     var data = this.props.data;
     if (data.loading) {
@@ -31,7 +33,14 @@ class LogList extends Component {
             <h1>{date.dateName}</h1>
             <h4>
               {date.logs.map(theLog => {
-                return <li key={theLog._id}> {theLog.logName}</li>;
+                return (
+                  <div>
+                    <li key={theLog.id}> {theLog.logName}</li>
+                    <button onClick={this.deleteLog.bind(this, theLog.id)}>
+                      -
+                    </button>
+                  </div>
+                );
               })}
             </h4>
           </div>
@@ -40,8 +49,17 @@ class LogList extends Component {
     }
   }
 
+  deleteLog(value) {
+    //console.log(value);
+    this.props.deleteLogMutation({
+      variables: {
+        logId: value
+      },
+      refetchQueries: [{ query: getLogsQuery }]
+    });
+  }
+
   render() {
-    console.log(this.displayLogs());
     return (
       <div>
         <header id="log-list">{this.displayLogs()}</header>
@@ -50,4 +68,13 @@ class LogList extends Component {
   }
 }
 
-export default graphql(getLogsQuery)(LogList);
+//export default graphql(getLogsQuery)(LogList);
+/*export default compose(
+  graphql(getLogsQuery, { name: "getLogsQuery" }),
+  graphql(deleteLogMutation, { name: "deleteLogMutation" })
+)(LogList);*/
+
+export default compose(
+  graphql(getLogsQuery),
+  graphql(deleteLogMutation, { name: "deleteLogMutation" })
+)(LogList);

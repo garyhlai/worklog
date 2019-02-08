@@ -48,17 +48,14 @@ const addLogMutation = gql`
     }
   }
 `;
-/*
-const getDateQuery = gql`
-  {
-    query GetDate($dateName: String!){
-    date(dateName: $dateName) {
+
+const deleteLogMutation = gql`
+  mutation DeleteLog($logId: ID!) {
+    deleteLog(logId: $logId) {
       dateName
     }
   }
-  }
 `;
-*/
 
 const getDateQuery = gql`
   query GetDate($dateName: String!) {
@@ -108,6 +105,7 @@ export {
   getGoalsQuery,
   addDateMutation,
   addLogMutation,
+  deleteLogMutation,
   addGoalMutation,
   getLogsQuery,
   getDateQuery

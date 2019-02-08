@@ -73,14 +73,7 @@ const RootQuery = new GraphQLObjectType({
       resolve(parent, args) {
         return Dates.findOne({ dateName: args.dateName });
       }
-    } /*
-    author: {
-      type: AuthorType,
-      args: { id: { type: GraphQLID } },
-      resolve(parent, args) {
-        return Author.findById(args.id);
-      }
-    },*/,
+    },
     logs: {
       type: GraphQLList(DateType),
       resolve(parent, args) {
@@ -152,6 +145,20 @@ const Mutation = new GraphQLObjectType({
           { dateName: args.dateName },
           { $push: { logs: { logName: args.logName, goalId: args.goalId } } },
           { returnNewDocument: true, upsert: true }
+        );
+      }
+    },
+    deleteLog: {
+      type: DateType,
+      args: {
+        logId: { type: GraphQLID }
+      },
+      resolve(parent, args) {
+        return Dates.findOneAndUpdate(
+          {},
+          { $pull: { logs: { _id: args.logId } } },
+          //{ $pull: { logs: { logName: args.logName } } },
+          { returnNewDocument: true, multi: true }
         );
       }
     },
