@@ -1,7 +1,6 @@
 const graphql = require("graphql");
 const Goal = require("./models/goal");
 const Dates = require("./models/date");
-//const Log = require("./models/log");
 const _ = require("lodash");
 const mongoose = require("mongoose");
 
@@ -100,38 +99,6 @@ const RootQuery = new GraphQLObjectType({
 const Mutation = new GraphQLObjectType({
   name: "Mutation",
   fields: {
-    /*
-    addGoal: {
-      type: GoalType,
-      args: {
-        name: { type: GraphQLString },
-        age: { type: GraphQLInt }
-      },
-      resolve(parent, args) {
-        let author = new Author({
-          name: args.name,
-          age: args.age
-        });
-        return author.save();
-      }
-    },
-    addBook: {
-      type: BookType,
-      args: {
-        name: { type: new GraphQLNonNull(GraphQLString) },
-        genre: { type: new GraphQLNonNull(GraphQLString) },
-        authorId: { type: new GraphQLNonNull(GraphQLID) }
-      },
-      resolve(parent, args) {
-        let book = new Book({
-          name: args.name,
-          genre: args.genre,
-          authorId: args.authorId
-        });
-        return book.save();
-      }
-    }*/
-
     addLog: {
       type: DateType,
       args: {
@@ -157,28 +124,10 @@ const Mutation = new GraphQLObjectType({
         return Dates.findOneAndUpdate(
           {},
           { $pull: { logs: { _id: args.logId } } },
-          //{ $pull: { logs: { logName: args.logName } } },
           { returnNewDocument: true, multi: true }
         );
       }
     },
-    /*
-    // add the logId to the corresponding date
-    updateDate: {
-      type: DateType,
-      args: {
-        dateName: { type: new GraphQLNonNull(GraphQLString) },
-        logId: { type: new GraphQLNonNull(GraphQLString) }
-      },
-      resolve(parent, args) {
-        Dates.findOneAndUpdate(
-          { dateName: args.dateName },
-          { $push: { logId: args.logId } }
-        ).then(function() {
-          return;
-        });
-      }
-    },*/
 
     addGoal: {
       type: GoalType,
@@ -190,6 +139,16 @@ const Mutation = new GraphQLObjectType({
           goalName: args.goalName
         });
         return goal.save();
+      }
+    },
+
+    deleteGoal: {
+      type: GoalType,
+      args: {
+        goalId: { type: GraphQLNonNull(GraphQLID) }
+      },
+      resolve(parent, args) {
+        return Goal.findOneAndDelete({ _id: args.goalId });
       }
     },
 
