@@ -45,6 +45,7 @@ class AddLog extends Component {
       },
       refetchQueries: [{ query: getLogsQuery }]
     });
+    this.setState({ logName: "" });
   }
 
   componentDidMount() {
@@ -63,6 +64,7 @@ class AddLog extends Component {
             <label>Log name:</label>
             <input
               required
+              value={this.state.logName}
               type="text"
               onChange={e => {
                 this.setState({ logName: e.target.value });

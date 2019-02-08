@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import { graphql } from "react-apollo";
-import { getGoalsQuery } from "../queries/queries";
+import { graphql, compose } from "react-apollo";
+import { getGoalsQuery, deleteGoalMutation } from "../queries/queries";
 
 // components
 //import BookDetails from './BookDetails';
@@ -12,21 +12,27 @@ class GoalList extends Component {
       selected: null
     };
   }
+  deleteGoal(value) {
+    //console.log(value);
+    this.props.deleteGoalMutation({
+      variables: {
+        goalId: value
+      },
+      refetchQueries: [{ query: getGoalsQuery }]
+    });
+  }
   displayGoals() {
     var data = this.props.data;
     if (data.loading) {
       return <div>Loading goals...</div>;
     } else {
-      /*
-      // return an array of array
-      return data.logs.map(date => {
-        // return an array of <li> logName </li> for each date
-        return date.logs.map(theLog => {
-          return <li key={theLog.id}> {theLog.logName}</li>;
-        });
-      });*/
       return data.goals.map(goal => {
-        return <h3>{goal.goalName}</h3>;
+        return (
+          <div>
+            <h3 style={{ display: "inline" }}>{goal.goalName}</h3>
+            <button onClick={this.deleteGoal.bind(this, goal.id)}>-</button>
+          </div>
+        );
       });
     }
   }
@@ -42,4 +48,7 @@ class GoalList extends Component {
   }
 }
 
-export default graphql(getGoalsQuery)(GoalList);
+export default compose(
+  graphql(getGoalsQuery),
+  graphql(deleteGoalMutation, { name: "deleteGoalMutation" })
+)(GoalList);

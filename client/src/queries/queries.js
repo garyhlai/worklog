@@ -73,6 +73,14 @@ const addGoalMutation = gql`
   }
 `;
 
+const deleteGoalMutation = gql`
+  mutation DeleteGoal($goalId: ID!) {
+    deleteGoal(goalId: $goalId) {
+      goalName
+    }
+  }
+`;
+
 const addDateMutation = gql`
   mutation AddDate($dateName: String!) {
     addDate(dateName: $dateName) {
@@ -107,6 +115,7 @@ export {
   addLogMutation,
   deleteLogMutation,
   addGoalMutation,
+  deleteGoalMutation,
   getLogsQuery,
   getDateQuery
 };

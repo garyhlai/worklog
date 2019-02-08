@@ -24,6 +24,7 @@ class AddGoal extends Component {
       },
       refetchQueries: [{ query: getGoalsQuery }]
     });
+    this.setState({ goalName: "" });
   }
 
   render() {
@@ -35,6 +36,7 @@ class AddGoal extends Component {
           <input
             required
             type="text"
+            value={this.state.goalName}
             onChange={e => this.setState({ goalName: e.target.value })}
           />
         </div>
