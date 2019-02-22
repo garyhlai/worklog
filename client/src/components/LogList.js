@@ -35,18 +35,19 @@ class LogList extends Component {
               {date.logs.map(theLog => {
                 return (
                   <div>
-                    <li key={theLog.id}> {theLog.logName}</li>
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      onClick={this.deleteLog.bind(
-                        this,
-                        theLog.id,
-                        date.dateName
-                      )}
-                    >
-                      -
-                    </Button>
+                    <li key={theLog.id}>
+                      {" "}
+                      {theLog.logName}
+                      <Button
+                        variant="contained"
+                        color="primary"
+                        onClick={this.deleteLog.bind(
+                          this,
+                          theLog.id,
+                          date.dateName
+                        )}
+                      />
+                    </li>
                   </div>
                 );
               })}

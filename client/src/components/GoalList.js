@@ -28,8 +28,8 @@ class GoalList extends Component {
     } else {
       return data.goals.map(goal => {
         return (
-          <div>
-            <h3 style={{ display: "inline" }}>{goal.goalName}</h3>
+          <div id="goal-list" style={{ display: "inline-block" }}>
+            <h3>{goal.goalName}</h3>
             <button onClick={this.deleteGoal.bind(this, goal.id)}>-</button>
           </div>
         );
