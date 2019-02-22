@@ -17,7 +17,7 @@ class LogList extends Component {
   displayLogs() {
     var data = this.props.data;
     if (data.loading) {
-      return <div>Loading books...</div>;
+      return <div>Loading logs...</div>;
     } else {
       /*
       // return an array of array
@@ -36,7 +36,13 @@ class LogList extends Component {
                 return (
                   <div>
                     <li key={theLog.id}> {theLog.logName}</li>
-                    <button onClick={this.deleteLog.bind(this, theLog.id)}>
+                    <button
+                      onClick={this.deleteLog.bind(
+                        this,
+                        theLog.id,
+                        date.dateName
+                      )}
+                    >
                       -
                     </button>
                   </div>
@@ -49,14 +55,16 @@ class LogList extends Component {
     }
   }
 
-  deleteLog(value) {
-    //console.log(value);
+  deleteLog(id, dateName) {
+    console.log("This id is: " + id);
     this.props.deleteLogMutation({
       variables: {
-        logId: value
+        logId: id,
+        dateName: dateName
       },
       refetchQueries: [{ query: getLogsQuery }]
     });
+    console.log("This function was run");
   }
 
   render() {

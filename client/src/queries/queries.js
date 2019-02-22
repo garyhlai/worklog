@@ -50,8 +50,8 @@ const addLogMutation = gql`
 `;
 
 const deleteLogMutation = gql`
-  mutation DeleteLog($logId: ID!) {
-    deleteLog(logId: $logId) {
+  mutation DeleteLog($dateName: String!, $logId: ID!) {
+    deleteLog(dateName: $dateName, logId: $logId) {
       dateName
     }
   }

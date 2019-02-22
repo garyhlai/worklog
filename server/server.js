@@ -1,5 +1,4 @@
 const express = require("express");
-//const expressGraphQL = require("express-graphql");
 const graphqlHTTP = require("express-graphql");
 const schema = require("./schema.js");
 const mongoose = require("mongoose");
@@ -35,7 +34,6 @@ mongoose.connect("mongodb://localhost/worklog", function(err, client) {
   if (err) {
     console.log(err);
   }
-  //setupData(0, modifyData);
 });
 
 mongoose.connection
@@ -50,10 +48,6 @@ mongoose.connection
 
 var theId;
 var currentDate = new Date().toDateString();
-//var currentTime = new Date().toString();
-/*function setTime(){
-}
-setInterval(setTime, 5000);*/
 
 function modifyData() {
   var aDate2 = new Dates({
@@ -82,14 +76,6 @@ function modifyData() {
     });
     aDate.save(function() {
       console.log("found");
-
-      /* works 
-        Dates.findOneAndUpdate(
-          {},
-          { $set: { "logs.$[elem].goalId": "100" } },
-          { arrayFilters: [{ "elem.logName": "Played chess" }] }
-        ).then(console.log("executed"));
-        */
 
       Goal.findOne({ goalName: "Be a better person" })
         .then(function(result) {

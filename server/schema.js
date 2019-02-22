@@ -118,11 +118,12 @@ const Mutation = new GraphQLObjectType({
     deleteLog: {
       type: DateType,
       args: {
+        dateName: { type: GraphQLString },
         logId: { type: GraphQLID }
       },
       resolve(parent, args) {
         return Dates.findOneAndUpdate(
-          {},
+          { dateName: args.dateName },
           { $pull: { logs: { _id: args.logId } } },
           { returnNewDocument: true, multi: true }
         );
