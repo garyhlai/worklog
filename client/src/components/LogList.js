@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { graphql, compose } from "react-apollo";
 import { getLogsQuery, deleteLogMutation } from "../queries/queries";
-
+import Button from "@material-ui/core/Button";
 // components
 //import BookDetails from './BookDetails';
 
@@ -36,7 +36,9 @@ class LogList extends Component {
                 return (
                   <div>
                     <li key={theLog.id}> {theLog.logName}</li>
-                    <button
+                    <Button
+                      variant="contained"
+                      color="primary"
                       onClick={this.deleteLog.bind(
                         this,
                         theLog.id,
@@ -44,7 +46,7 @@ class LogList extends Component {
                       )}
                     >
                       -
-                    </button>
+                    </Button>
                   </div>
                 );
               })}
