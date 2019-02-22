@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import { graphql, compose } from "react-apollo";
 import { getGoalsQuery, deleteGoalMutation } from "../queries/queries";
-
+import { Fab } from "@material-ui/core";
 // components
 //import BookDetails from './BookDetails';
 
@@ -28,9 +28,17 @@ class GoalList extends Component {
     } else {
       return data.goals.map(goal => {
         return (
-          <div id="goal-list" style={{ display: "inline-block" }}>
+          <div
+            id="goal-list"
+            style={{ display: "inline-block", position: "relative" }}
+          >
             <h3>{goal.goalName}</h3>
-            <button onClick={this.deleteGoal.bind(this, goal.id)}>-</button>
+            <button
+              id="goal-button"
+              onClick={this.deleteGoal.bind(this, goal.id)}
+            >
+              -
+            </button>
           </div>
         );
       });

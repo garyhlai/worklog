@@ -4,6 +4,44 @@ body {
   /*font-family: "Open Sans", sans-serif;*/
 }
 
+#logs {
+  cursor: pointer;
+}
+#logs li:hover + #log-button,
+#log-button:hover {
+  display: inline-block;
+}
+
+#log-button {
+  display: none;
+  position: absolute;
+  top: -3px;
+  right: -8px;
+  color: #ad1457;
+  font-size: 1vw;
+  background: #fff;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+#goal-list h3:hover + #goal-button,
+#goal-button:hover {
+  display: inline-block;
+}
+
+#goal-button {
+  display: none;
+  position: absolute;
+  top: -3px;
+  right: -8px;
+  color: #fff;
+  font-size: 1vw;
+  background: #ad1457;
+  border: 0;
+  border-radius: 50%;
+  cursor: pointer;
+}
 #main h1 {
   color: #444;
   text-align: center;
@@ -29,8 +67,13 @@ body {
   color: #fff;
 }
 
+#goal-list {
+  margin: 10px;
+}
+
 #goal-list h3 {
-  margin: 12px;
+  display: inline-block;
+  margin-top: 5px;
   padding: 10px;
   border-radius: 4px;
   border: 1px solid #880e4f;
