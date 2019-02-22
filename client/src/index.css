@@ -9,13 +9,12 @@ body {
   text-align: center;
 }
 
-/*
 #main {
   padding: 0px;
   box-sizing: border-box;
   width: 60%;
   height: 100%;
-}*/
+}
 #log-list {
   position: fixed;
   top: 0;
