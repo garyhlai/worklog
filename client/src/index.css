@@ -4,26 +4,74 @@ body {
   /*font-family: "Open Sans", sans-serif;*/
 }
 
+#add-goal {
+  width: 90%;
+  margin-bottom: 3vh;
+  margin-left: 2vw;
+  padding-bottom: 3vh;
+  border-bottom: solid 2px #444;
+}
+#add-log {
+  width: 50%;
+  /*margin-bottom: 3vh;
+  margin-left: 2vw;
+  padding-bottom: 3vh;*/
+  /*background: #eee;*/
+  /*background: #880e4f;*/
+  padding: 2vw;
+  /* position: fixed;
+  bottom: 0;
+  right: 0;*/
+  /*border-bottom: solid 2px #444;*/
+}
+
 #logs {
   cursor: pointer;
+  margin-bottom: 0;
 }
 #logs li:hover + #log-button,
 #log-button:hover {
   display: inline-block;
 }
 
+#logh4 {
+  margin-bottom: 0;
+}
+/*
 #logs li:hover {
   background: #880e4f;
-}
+}*/
 #logs li {
   padding: 0.1rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+  margin-bottom: 0;
 }
 
+#log-for-add {
+  margin-left: 0.5rem;
+  margin-right: 0.5rem;
+  cursor: pointer;
+}
+#add-log-button {
+  color: #ad1457;
+  width: 60%;
+  height: 80%;
+  background: #880e4f;
+  border: 0;
+  display: inline;
+  cursor: pointer;
+}
+
+/*
+#log-for-add:hover {
+  background: #880e4f;
+}*/
 #log-button {
   display: none;
   position: absolute;
   top: 1.8px;
-  right: 2px;
+  right: 10%;
   color: #ad1457;
   font-size: 1vw;
   background: #fff;

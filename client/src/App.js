@@ -5,7 +5,7 @@ import { ApolloProvider } from "react-apollo";
 // components
 import LogList from "./components/LogList";
 import GoalList from "./components/GoalList";
-import AddLog from "./components/AddLog";
+//import AddLog from "./components/AddLog";
 import AddGoal from "./components/AddGoal";
 
 // apollo client setup
@@ -19,9 +19,9 @@ class App extends Component {
       <ApolloProvider client={client}>
         <div id="main">
           <h1>Sospiro Work Log</h1>
-          <AddGoal />
           <GoalList />
-          <AddLog />
+          <AddGoal />
+
           <LogList />
         </div>
       </ApolloProvider>

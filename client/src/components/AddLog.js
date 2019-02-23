@@ -58,9 +58,6 @@ class AddLog extends Component {
       <div>
         <form id="add-log" onSubmit={this.submitForm.bind(this)}>
           <div className="field">
-            <label style={{ display: "block" }}>
-              Todays is {this.state.dateName}
-            </label>
             <label>Log name:</label>
             <input
               required
