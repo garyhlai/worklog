@@ -12,11 +12,18 @@ body {
   display: inline-block;
 }
 
+#logs li:hover {
+  background: #880e4f;
+}
+#logs li {
+  padding: 0.1rem;
+}
+
 #log-button {
   display: none;
   position: absolute;
-  top: -3px;
-  right: -8px;
+  top: 1.8px;
+  right: 2px;
   color: #ad1457;
   font-size: 1vw;
   background: #fff;
